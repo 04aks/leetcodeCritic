@@ -64,12 +64,14 @@ public class ActionHandler implements ActionListener{
     void generateTweet(){
         System.out.println(p.tweet.getAttemptImage() + " / " + p.tweet.getIdealImage());
         if(p.tweet.getAttemptImage() != null && p.tweet.getIdealImage() != null){
-            // Edits and creates the image
-            p.editor.editAttemptImage(p.tweet.getAttemptImage());
             
             // we translate the image to base64 string (required by gemini) and rate the method from 1 to 3
-            String test = p.gemini.geminiAssessment(p.tweetUtilities.encodeImageToBase64(p.tweet.getAttemptImage()));
-            System.out.println(test);
+            String ranking = p.gemini.geminiAssessment(p.tweetUtilities.encodeImageToBase64(p.tweet.getAttemptImage())).trim();
+            // Edits and creates the image based on gemini ranking
+            p.editor.editAttemptImage(p.tweet.getAttemptImage(), Integer.parseInt(ranking));
+            
+            
+            System.out.println(ranking);
         }
     }
     

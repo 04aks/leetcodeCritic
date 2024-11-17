@@ -1,5 +1,7 @@
 package aks.utils;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,5 +40,31 @@ public class TweetUtilities {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public BufferedImage importImage(String path){
+        BufferedImage image = null;
+        InputStream is = getClass().getResourceAsStream(path);
+        try{
+            image = ImageIO.read(is);
+            is.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    public BufferedImage imageWithLowerOpacity(BufferedImage image, float alpha, double scale){
+        
+        int newWidth = (int) (image.getWidth() * scale);
+        int newHeight = (int) (image.getHeight() * scale);
+
+        BufferedImage lowerTransparency = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = lowerTransparency.createGraphics();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g2.drawImage(image, 0, 0, newWidth, newHeight, null);
+        g2.dispose();
+
+        return lowerTransparency;
     }
 }

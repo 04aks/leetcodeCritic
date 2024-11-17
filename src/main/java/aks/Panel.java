@@ -12,8 +12,8 @@ public class Panel extends JPanel{
     ActionHandler ah = new ActionHandler(this);
     JButton attemptButton, idealButton, generateButton;
     Tweet tweet = new Tweet();
-    Editor editor = new Editor(this);
     TweetUtilities tweetUtilities = new TweetUtilities();
+    Editor editor = new Editor(this);
     Gemini gemini = new Gemini();
     
     public Panel(){
