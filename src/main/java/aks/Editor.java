@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Editor {
@@ -87,11 +87,23 @@ public class Editor {
 
         return image;
     }
+    public BufferedImage feedbackImage(BufferedImage attempt, BufferedImage ideal, String feedback){
+        BufferedImage image = new BufferedImage(attempt.getWidth() + ideal.getWidth(), 100, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = (Graphics2D) image.createGraphics();
+        g2.setColor(Color.GRAY);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setFont(font);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 15));
+        g2.drawString(feedback, 10, 30);
+        
+        g2.dispose();
+        return image;
+    }
 
-    public void mergeBothPictures(BufferedImage attempt, BufferedImage solution){
+    public void mergePictures(BufferedImage attempt, BufferedImage solution, BufferedImage feedbackImg){
 
-        int totalHeight = Math.max(attempt.getHeight(), solution.getHeight()); 
-        int totalWidth = attempt.getWidth() + solution.getWidth();
+        int totalHeight = Math.max(attempt.getHeight(), solution.getHeight()) + feedbackImg.getHeight(); 
+        int totalWidth = attempt.getWidth() + solution.getWidth() + 5;
 
         // if(attemptWidth>=attemptHeight && attemptWidth >= solutionWidth){
         //     totalHeight = Math.max(attemptHeight, solutionHeight);
@@ -103,16 +115,24 @@ public class Editor {
 
         BufferedImage image = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) image.createGraphics();
+        //Background
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0, 0, totalWidth, totalHeight);
         
         //SOLUTION
         int solutionX = 0;
-        int solutionY = (totalHeight - solution.getHeight())/2;
+        int solutionY = ((totalHeight - feedbackImg.getHeight()) - solution.getHeight())/2;
         g2.drawImage(solution, solutionX, solutionY, null);
 
         //ATTEMPT
-        int attemptX = solution.getWidth();
-        int attemptY = (totalHeight - attempt.getHeight())/2;
+        int attemptX = solution.getWidth() + 5;
+        int attemptY = ((totalHeight - feedbackImg.getHeight()) - attempt.getHeight())/2;
         g2.drawImage(attempt, attemptX, attemptY, null);
+
+        //FEED
+        int feedX = 0;
+        int feedY = totalHeight - feedbackImg.getHeight();
+        g2.drawImage(feedbackImg, feedX, feedY, null);
 
         g2.dispose();
         File file = new File("merged.png");

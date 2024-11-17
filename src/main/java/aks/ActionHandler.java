@@ -66,12 +66,15 @@ public class ActionHandler implements ActionListener{
         if(p.tweet.getAttemptImage() != null && p.tweet.getIdealImage() != null){
             
             // we translate the image to base64 string (required by gemini) and rate the method from 1 to 3
-            String ranking = p.gemini.geminiAssessment(p.tweetUtilities.encodeImageToBase64(p.tweet.getAttemptImage())).trim();
+            String json = p.gemini.geminiAssessment(p.tweetUtilities.encodeImageToBase64(p.tweet.getAttemptImage())).trim();
+            String ranking = p.filterJson.getGeminiKey(json, "ranking");
+            String feedback = p.filterJson.getGeminiKey(json, "feedback");
             // Edits and creates the image based on gemini ranking
             BufferedImage t = p.editor.editAttemptImage(p.tweet.getAttemptImage(), Integer.parseInt(ranking));
             BufferedImage a = p.editor.editIdealImage(p.tweet.getIdealImage());
+            BufferedImage f = p.editor.feedbackImage(t, a, feedback);
 
-            p.editor.mergeBothPictures(t, a);
+            p.editor.mergePictures(t, a, f);
         }
     }
     

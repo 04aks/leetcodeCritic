@@ -15,6 +15,7 @@ public class Panel extends JPanel{
     TweetUtilities tweetUtilities = new TweetUtilities();
     Editor editor = new Editor(this);
     Gemini gemini = new Gemini();
+    FilterJson filterJson = new FilterJson();
     
     public Panel(){
         // ADD BUTTONS TO PANEL
