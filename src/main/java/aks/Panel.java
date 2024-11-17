@@ -4,11 +4,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import aks.utils.TweetUtilities;
+
 public class Panel extends JPanel{
 
     ActionHandler ah = new ActionHandler(this);
     JButton attemptButton, idealButton, generateButton;
     Tweet tweet = new Tweet();
+    Editor editor = new Editor(this);
+    TweetUtilities tweetUtilities = new TweetUtilities();
     
     public Panel(){
         // ADD BUTTONS TO PANEL

@@ -46,6 +46,7 @@ public class ActionHandler implements ActionListener{
             p.tweet.setAttemptImage(attemptImagePath);
         }else{
             p.attemptButton.setBackground(Color.red);
+            p.tweet.setAttemptImage(null);
         }
     }
 
@@ -56,11 +57,15 @@ public class ActionHandler implements ActionListener{
             p.tweet.setIdealImage(idealImagePath);
         }else{
             p.idealButton.setBackground(Color.RED);
+            p.tweet.setIdealImage(null);
         }
     }
 
     void generateTweet(){
         System.out.println(p.tweet.getAttemptImage() + " / " + p.tweet.getIdealImage());
+        if(p.tweet.getAttemptImage() != null && p.tweet.getIdealImage() != null){
+            p.editor.editAttemptImage(p.tweet.getAttemptImage());
+        }
     }
     
 }
