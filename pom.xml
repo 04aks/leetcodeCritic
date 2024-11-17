@@ -8,6 +8,21 @@
     <artifactId>tweetbprint</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+      <dependency>
+            <groupId>com.github.04aks</groupId>
+            <artifactId>gemini-sdk</artifactId>
+            <version>2.1</version>
+        </dependency>
+    </dependencies>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

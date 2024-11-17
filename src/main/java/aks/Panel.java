@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import aks.ai.Gemini;
 import aks.utils.TweetUtilities;
 
 public class Panel extends JPanel{
@@ -13,6 +14,7 @@ public class Panel extends JPanel{
     Tweet tweet = new Tweet();
     Editor editor = new Editor(this);
     TweetUtilities tweetUtilities = new TweetUtilities();
+    Gemini gemini = new Gemini();
     
     public Panel(){
         // ADD BUTTONS TO PANEL

@@ -13,4 +13,7 @@ public class Consts {
     // generate button
     static final String BUTTON_GENERATE_NAME = "Generate overview Tweet";
     static final String BUTTON_GENERATE_COMMAND = "generate-tweet"; 
+
+    // Gemini prompt
+    public static final String GEMINI_PROMPT = "the code given is a solution to a leetcode problem, rank the attempt from 1 to 3, 1 being a horrible attempt the code will not retur the desired outcome, 2 being a fine attempt it will return the desired outcome but its not memory and time efficient and basically a bad way to go about it, 3 being the correct way to do it, respond with only the number";
 }
