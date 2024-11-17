@@ -1,6 +1,8 @@
 package aks;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,6 +12,7 @@ import javax.imageio.ImageIO;
 public class Editor {
 
     BufferedImage horribleAttempt, alrightAttempt, goodAttempt;
+    Font font;
     
     Panel p;
     public Editor(Panel p){
@@ -17,6 +20,7 @@ public class Editor {
         horribleAttempt = p.tweetUtilities.importImage("/aks/res/horrible.png");
         alrightAttempt = p.tweetUtilities.importImage("/aks/res/alright.png");
         goodAttempt = p.tweetUtilities.importImage("/aks/res/good.png");
+        font = p.tweetUtilities.importFont("/aks/res/font/impact.ttf");
     }
 
 
@@ -42,15 +46,26 @@ public class Editor {
         double scale = 1;
         if(senkuReactionHeight > imageHeight){
             scale = (double) imageHeight/senkuReactionHeight;
-            System.out.println("scale " + scale);
         }
 
         BufferedImage editedReactionImage = p.tweetUtilities.imageWithLowerOpacity(senkuReaction, 0.2f, scale);
-        // Senku reaction coordinates
+        // Senku reaction coordinates (Bottom Right)
         int x = image.getWidth() - editedReactionImage.getWidth();
-        int y = 0;
-        System.out.println("image " + image.getWidth() + "   senku " + editedReactionImage.getWidth());
+        int y = imageHeight - editedReactionImage.getHeight();
         g2.drawImage(editedReactionImage, x, y,  null);
+
+        // Frame
+        g2.setColor(Color.RED);
+        g2.drawRect(0, 0, image.getWidth() -1, image.getHeight() - 1);
+        //TITLE
+        g2.setColor(new Color(255,0,0,40));
+        g2.setFont(font);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, image.getWidth()/10));
+        String title = "ATTEMPT";
+        FontMetrics fm = g2.getFontMetrics();
+        // Center the text horizontally 
+        int textX = (image.getWidth() - fm.stringWidth(title)) / 2 ;
+        g2.drawString("ATTEMPT", textX, imageHeight/2);
 
         g2.dispose();
 

@@ -1,6 +1,7 @@
 package aks.utils;
 
 import java.awt.AlphaComposite;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -66,5 +67,16 @@ public class TweetUtilities {
         g2.dispose();
 
         return lowerTransparency;
+    }
+
+    public Font importFont(String path){
+        Font font = null;
+        InputStream is = getClass().getResourceAsStream(path);
+        try{
+            font = Font.createFont(Font.TRUETYPE_FONT, is);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return font;
     }
 }
