@@ -1,6 +1,5 @@
 package aks;
 
-import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -9,10 +8,10 @@ public class Panel extends JPanel{
 
     ActionHandler ah = new ActionHandler(this);
     JButton attemptButton, idealButton, generateButton;
+    Tweet tweet = new Tweet();
     
     public Panel(){
-        setBackground(Color.DARK_GRAY);     
-
+        // ADD BUTTONS TO PANEL
         attemptButton = button(Consts.BUTTON_ATTEMPT_NAME, Consts.BUTTON_ATTEMPT_COMMAND, ah);
         add(attemptButton);
 
