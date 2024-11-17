@@ -59,22 +59,77 @@ public class Editor {
         g2.drawRect(0, 0, image.getWidth() -1, image.getHeight() - 1);
         //TITLE
         g2.setColor(new Color(255,0,0,40));
-        g2.setFont(font);
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, image.getWidth()/10));
-        String title = "ATTEMPT";
-        FontMetrics fm = g2.getFontMetrics();
-        // Center the text horizontally 
-        int textX = (image.getWidth() - fm.stringWidth(title)) / 2 ;
-        g2.drawString("ATTEMPT", textX, imageHeight/2);
+        drawText(g2, "ATTEMPT", 10, image);
 
         g2.dispose();
 
-        File imageFIle = new File("test.png");
-        try {
-            ImageIO.write(image, "png", imageFIle);
-        } catch (IOException e) {
+        // File imageFIle = new File("test.png");
+        // try {
+        //     ImageIO.write(image, "png", imageFIle);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+        return image;
+    }
+
+    public BufferedImage editIdealImage(File file){
+        BufferedImage originalImage = p.tweetUtilities.fileToBufferedImage(file);
+        
+        BufferedImage image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = (Graphics2D) image.createGraphics();
+        g2.drawImage(originalImage, 0, 0, null);
+        g2.setColor(Color.GREEN);
+        g2.drawRect(0, 0, image.getWidth() - 1, image.getHeight() - 1);
+        g2.setColor(new Color(0, 255, 0, 40));
+        drawText(g2, "SOLUTION", 10, image);
+
+        g2.dispose();   
+
+        return image;
+    }
+
+    public void mergeBothPictures(BufferedImage attempt, BufferedImage solution){
+
+        int totalHeight = Math.max(attempt.getHeight(), solution.getHeight()); 
+        int totalWidth = attempt.getWidth() + solution.getWidth();
+
+        // if(attemptWidth>=attemptHeight && attemptWidth >= solutionWidth){
+        //     totalHeight = Math.max(attemptHeight, solutionHeight);
+        //     totalWidth = attemptWidth + solutionWidth;
+        // }else{
+        //     totalHeight = attemptHeight + solutionHeight;
+        //     totalWidth = Math.max(attemptWidth, attemptHeight);
+        // }
+
+        BufferedImage image = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = (Graphics2D) image.createGraphics();
+        
+        //SOLUTION
+        int solutionX = 0;
+        int solutionY = (totalHeight - solution.getHeight())/2;
+        g2.drawImage(solution, solutionX, solutionY, null);
+
+        //ATTEMPT
+        int attemptX = solution.getWidth();
+        int attemptY = (totalHeight - attempt.getHeight())/2;
+        g2.drawImage(attempt, attemptX, attemptY, null);
+
+        g2.dispose();
+        File file = new File("merged.png");
+        try{    
+            ImageIO.write(image, "png", file);
+        }catch(Exception e){
             e.printStackTrace();
         }
-        return image;
+    }
+
+    public void drawText(Graphics2D g2, String text ,int fontSize, BufferedImage parent){
+        g2.setFont(font);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, parent.getWidth()/10));
+        String title = text;
+        FontMetrics fm = g2.getFontMetrics();
+        // Center the text horizontally 
+        int textX = (parent.getWidth() - fm.stringWidth(title)) / 2 ;
+        g2.drawString(text, textX, parent.getHeight()/2);
     }
 }

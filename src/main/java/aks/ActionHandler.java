@@ -3,6 +3,7 @@ package aks;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -67,7 +68,10 @@ public class ActionHandler implements ActionListener{
             // we translate the image to base64 string (required by gemini) and rate the method from 1 to 3
             String ranking = p.gemini.geminiAssessment(p.tweetUtilities.encodeImageToBase64(p.tweet.getAttemptImage())).trim();
             // Edits and creates the image based on gemini ranking
-            p.editor.editAttemptImage(p.tweet.getAttemptImage(), Integer.parseInt(ranking));
+            BufferedImage t = p.editor.editAttemptImage(p.tweet.getAttemptImage(), Integer.parseInt(ranking));
+            BufferedImage a = p.editor.editIdealImage(p.tweet.getIdealImage());
+
+            p.editor.mergeBothPictures(t, a);
         }
     }
     
