@@ -1,5 +1,6 @@
 package aks;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -11,11 +12,14 @@ public class Panel extends JPanel{
 
     ActionHandler ah = new ActionHandler(this);
     JButton attemptButton, idealButton, generateButton;
-    Tweet tweet = new Tweet();
-    TweetUtilities tweetUtilities = new TweetUtilities();
-    Editor editor = new Editor(this);
-    Gemini gemini = new Gemini();
-    FilterJson filterJson = new FilterJson();
+    public Tweet tweet = new Tweet();
+    public TweetUtilities tweetUtilities = new TweetUtilities();
+    public Editor editor = new Editor(this);
+    public Gemini gemini = new Gemini();
+    public FilterJson filterJson = new FilterJson();
+
+    Color red = new Color(255,0,0,50);
+    Color green = new Color(0,255,0,50);
     
     public Panel(){
         // ADD BUTTONS TO PANEL

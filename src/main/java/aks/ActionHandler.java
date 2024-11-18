@@ -1,12 +1,10 @@
 package aks;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import aks.threads.GenerateThread;
+import aks.threads.OpenFileThread;
+import aks.threads.OpenSolutionFileThread;
 
 public class ActionHandler implements ActionListener{
 
@@ -25,56 +23,21 @@ public class ActionHandler implements ActionListener{
         }
     }
 
-    File chooseFile(String name, String extension){
-        JFileChooser fileChooser = new JFileChooser();
-
-        fileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG image", "png"));
-
-        int v = fileChooser.showOpenDialog(null);
-
-        if(v == JFileChooser.APPROVE_OPTION){
-            return new File(fileChooser.getSelectedFile().getAbsolutePath());
-        }
-
-        return null;
-    }
-
     void uploadAttempt(){
-        File attemptImagePath = chooseFile("PNG image", "png");
-        if(attemptImagePath != null){
-            p.attemptButton.setBackground(Color.green);
-            p.tweet.setAttemptImage(attemptImagePath);
-        }else{
-            p.attemptButton.setBackground(Color.red);
-            p.tweet.setAttemptImage(null);
-        }
+        OpenFileThread openFileThread = new OpenFileThread(p, p.tweet, p.attemptButton, p.green, p.red);
+        openFileThread.execute();
     }
 
     void uploadIdeal(){
-        File idealImagePath = chooseFile("PNG image", "png");
-        if(idealImagePath != null){
-            p.idealButton.setBackground(Color.green);
-            p.tweet.setIdealImage(idealImagePath);
-        }else{
-            p.idealButton.setBackground(Color.RED);
-            p.tweet.setIdealImage(null);
-        }
+        OpenSolutionFileThread openSolutionFileThread = new OpenSolutionFileThread(p, p.tweet, p.idealButton, p.green, p.red);
+        openSolutionFileThread.execute();
     }
 
     void generateTweet(){
         if(p.tweet.getAttemptImage() != null && p.tweet.getIdealImage() != null){
             
-            // we translate the image to base64 string (required by gemini) and rate the method from 1 to 3
-            String json = p.gemini.geminiAssessment(p.tweetUtilities.encodeImageToBase64(p.tweet.getAttemptImage())).trim();
-            String ranking = p.filterJson.getGeminiKey(json, "ranking");
-            String feedback = p.filterJson.getGeminiKey(json, "feedback");
-            // Edits and creates the image based on gemini ranking
-            BufferedImage t = p.editor.editAttemptImage(p.tweet.getAttemptImage(), Integer.parseInt(ranking));
-            BufferedImage a = p.editor.editIdealImage(p.tweet.getIdealImage());
-            BufferedImage f = p.editor.feedbackImage(t, a, feedback);
-
-            p.editor.mergePictures(t, a, f);
+            GenerateThread generateThread = new GenerateThread(p);
+            generateThread.execute();
         }
     }
     

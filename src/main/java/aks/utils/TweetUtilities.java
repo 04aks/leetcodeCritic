@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.util.Base64;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TweetUtilities {
     
@@ -78,5 +80,20 @@ public class TweetUtilities {
             e.printStackTrace();
         }
         return font;
+    }
+
+    public File chooseFile(String name, String extension){
+        JFileChooser fileChooser = new JFileChooser();
+
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG image", "png"));
+
+        int v = fileChooser.showOpenDialog(null);
+
+        if(v == JFileChooser.APPROVE_OPTION){
+            return new File(fileChooser.getSelectedFile().getAbsolutePath());
+        }
+
+        return null;
     }
 }
