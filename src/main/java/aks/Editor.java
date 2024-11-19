@@ -88,13 +88,50 @@ public class Editor {
         return image;
     }
     public BufferedImage feedbackImage(BufferedImage attempt, BufferedImage ideal, String feedback){
-        BufferedImage image = new BufferedImage(attempt.getWidth() + ideal.getWidth(), 100, BufferedImage.TYPE_INT_ARGB);
+        
+        int imageWidth = attempt.getWidth() + ideal.getWidth();
+        int startY = 25;
+        int startX = 25;
+
+        
+        BufferedImage image = new BufferedImage(imageWidth, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) image.createGraphics();
+
         g2.setColor(Color.GRAY);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        // Set font first then find the width of the string;
         g2.setFont(font);
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 15));
-        g2.drawString(feedback, 10, 30);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20));
+        
+        
+        //find feedback String width
+        FontMetrics fm = g2.getFontMetrics();
+        int feedbackWidth = fm.stringWidth(feedback);
+        //if String width larger than image width we wrap it
+        if(feedbackWidth > imageWidth - startX){
+            StringBuilder wrappedFeedback = new StringBuilder();
+            int currentLineWidth = 0;
+
+            for(String word : feedback.split(" ")){
+
+                int wordWidth = fm.stringWidth(word);
+                if(currentLineWidth + wordWidth> imageWidth - startX){
+                    wrappedFeedback.append("\n");
+                    currentLineWidth = 0;
+                }
+
+                wrappedFeedback.append(word).append(" ");
+                currentLineWidth += wordWidth + fm.stringWidth(" ");
+            }
+
+            System.out.println(wrappedFeedback.toString());
+            for(String line : wrappedFeedback.toString().split("\n")){
+                g2.drawString(line, startX, startY);
+                startY *= 2;
+            }
+        }else{
+            g2.drawString(feedback, startX, startY);
+        }        
         
         g2.dispose();
         return image;
