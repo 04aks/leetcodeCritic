@@ -2,6 +2,9 @@ package aks;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+
 import aks.threads.GenerateThread;
 import aks.threads.OpenFileThread;
 import aks.threads.OpenSolutionFileThread;
@@ -20,6 +23,8 @@ public class ActionHandler implements ActionListener{
             case Consts.BUTTON_ATTEMPT_COMMAND: uploadAttempt(); break;
             case Consts.BUTTON_IDEAL_COMMAND: uploadIdeal(); break;
             case Consts.BUTTON_GENERATE_COMMAND: generateTweet(); break;
+            case Consts.ATTEMPT_SCREENSHOT_CMD: takeAttemptScreenshot(); break;
+            case Consts.SOLUTION_SCREENSHOT_CMD: takeSolutionScreenshot(); break;
         }
     }
 
@@ -39,6 +44,14 @@ public class ActionHandler implements ActionListener{
             GenerateThread generateThread = new GenerateThread(p);
             generateThread.execute();
         }
+    }
+    
+    void takeAttemptScreenshot(){
+        Window.frame.setState(JFrame.ICONIFIED);
+    }
+
+    void takeSolutionScreenshot(){
+        Window.frame.setState(JFrame.ICONIFIED);
     }
     
 }
