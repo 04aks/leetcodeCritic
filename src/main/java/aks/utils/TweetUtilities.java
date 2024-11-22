@@ -3,6 +3,7 @@ package aks.utils;
 import java.awt.AlphaComposite;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.Base64;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -95,5 +97,14 @@ public class TweetUtilities {
         }
 
         return null;
+    }
+
+    public JButton button(String title, String actionCommand, ActionListener al){
+        JButton button = new JButton(title);
+        button.setFocusable(false);
+        button.setActionCommand(actionCommand);
+        button.addActionListener(al);
+
+        return button;
     }
 }
