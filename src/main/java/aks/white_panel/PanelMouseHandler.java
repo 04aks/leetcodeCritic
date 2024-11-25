@@ -48,7 +48,6 @@ public class PanelMouseHandler implements MouseListener{
 
         // take screenshot
         sp.takeScreenshot(new Rectangle(sp.rectX, sp.rectY, sp.rectWidth, sp.rectHeight));
-        // sp.saveScreenshot();
         sp.repaint();
     }
     

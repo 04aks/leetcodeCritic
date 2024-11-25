@@ -9,17 +9,18 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class ScreeniePanel extends JPanel{
+public class ScreeniePanel extends JPanel implements Runnable{
     
     PanelMouseHandler pmh = new PanelMouseHandler(this);
     int rectX, rectY, rectWidth, rectHeight;
+    int FPS = 60;
     Color panelColor = new Color(0,0,0,50);
+    Thread screenieThread;
     ScreeniePanel(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setPreferredSize(screenSize);
@@ -65,6 +66,39 @@ public class ScreeniePanel extends JPanel{
         }
 
         return "";
+    }
+
+    public void startScreenieThread(){
+        screenieThread = new Thread(this);
+        screenieThread.start();
+    }
+
+    @Override
+    public void run() {
+
+        double drawInterval = 1000000000/FPS;
+        double nextDrawTime = System.nanoTime() + drawInterval;
+        while(screenieThread != null){
+            update();
+            repaint();
+
+            try{
+
+                double remainingTime = nextDrawTime - System.nanoTime();
+                remainingTime /= 1000000;
+                if(remainingTime < 0){
+                    remainingTime = 0;
+                }
+                Thread.sleep((long)remainingTime);
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+            nextDrawTime += drawInterval;
+        }
+    }
+
+    public void update(){
+        System.out.println("niggers");
     }
 
     @Override
