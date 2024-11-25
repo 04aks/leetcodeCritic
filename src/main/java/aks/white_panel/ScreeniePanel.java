@@ -10,22 +10,25 @@ import javax.swing.JPanel;
 public class ScreeniePanel extends JPanel{
     
     PanelMouseHandler pmh = new PanelMouseHandler(this);
+    int rectX, rectY, rectWidth, rectHeight;
     ScreeniePanel(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setPreferredSize(screenSize);
-        setBackground(new Color(255,255,255,50));
+        setOpaque(false);
         addMouseListener(pmh);
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        g2.setColor(new Color(0,0,0,80));
+        g2.setColor(new Color(0,0,0,50));
         g2.fillRect(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
 
         g2.setColor(Color.red);
-        g2.drawRect(pmh.rectX, pmh.rectY, pmh.rectWidth, pmh.rectHeight);
+        g2.drawRect(rectX, rectY, rectWidth, rectHeight);
+
+        g2.dispose();
     }
 }
