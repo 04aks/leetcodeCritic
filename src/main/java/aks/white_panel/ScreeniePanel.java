@@ -11,7 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ScreeniePanel extends JPanel{
     
@@ -31,13 +33,38 @@ public class ScreeniePanel extends JPanel{
             Robot robot = new Robot();
             BufferedImage capture = robot.createScreenCapture(rectangle);
 
-            File screenshot = new File("capture.png");
+            String location = saveScreenshotLocation();
+            // ensure location path ends with '.png'
+            if(!location.endsWith(".png")){
+                location += ".png";
+            }
+            File screenshot = new File(location);
             ImageIO.write(capture, "png", screenshot);
 
-            System.out.println("created prolly");
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public String saveScreenshotLocation(){
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save your Code screenshot");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG image", "png");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+
+        int option = fileChooser.showSaveDialog(null);
+        if(option == JFileChooser.APPROVE_OPTION){
+            File saveLoc = fileChooser.getSelectedFile();
+            System.out.println(saveLoc.getAbsolutePath());
+            return saveLoc.getAbsolutePath();
+            
+        }else{
+            System.out.println("so'ing went wrong");
+        }
+
+        return "";
     }
 
     @Override
