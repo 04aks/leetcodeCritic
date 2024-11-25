@@ -3,11 +3,12 @@ package aks.white_panel;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class PanelMouseHandler implements MouseListener{
+public class PanelMouseHandler implements MouseListener, MouseMotionListener{
 
     ScreeniePanel sp;
-    int endingX, endingY;
+    int endingX, endingY, aniEndingX, aniEndingY;
     PanelMouseHandler(ScreeniePanel sp){
         this.sp = sp;
     }
@@ -49,6 +50,25 @@ public class PanelMouseHandler implements MouseListener{
         // take screenshot
         sp.takeScreenshot(new Rectangle(sp.rectX, sp.rectY, sp.rectWidth, sp.rectHeight));
         sp.repaint();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        sp.aniX = sp.rectX;
+        sp.aniY = sp.rectY;
+        sp.aniWidth = Math.abs(e.getXOnScreen() - sp.rectX);
+        sp.aniHeight = Math.abs(e.getYOnScreen() - sp.rectY);
+        if((aniEndingX = e.getXOnScreen()) < sp.aniX){
+            sp.aniX = aniEndingX;
+        }
+        if((aniEndingY = e.getYOnScreen()) < sp.aniY){
+            sp.aniY = aniEndingY;
+        }
+        // System.out.println("say yo to the local cat");
+    }
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        
     }
     
 }

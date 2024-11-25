@@ -18,6 +18,7 @@ public class ScreeniePanel extends JPanel implements Runnable{
     
     PanelMouseHandler pmh = new PanelMouseHandler(this);
     int rectX, rectY, rectWidth, rectHeight;
+    int aniX, aniY, aniWidth, aniHeight;
     int FPS = 60;
     Color panelColor = new Color(0,0,0,50);
     Thread screenieThread;
@@ -26,6 +27,7 @@ public class ScreeniePanel extends JPanel implements Runnable{
         setPreferredSize(screenSize);
         setOpaque(false);
         addMouseListener(pmh);
+        addMouseMotionListener(pmh);
     }
 
     public void takeScreenshot(Rectangle rectangle){
@@ -98,7 +100,8 @@ public class ScreeniePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        System.out.println("niggers");
+        System.out.println("rectangle: " + rectX + " " + rectY + " " + rectWidth + " " + rectHeight);
+        System.out.println("aniRect: " + aniX + " " + aniY + " " + aniWidth + " " + aniHeight);
     }
 
     @Override
@@ -109,8 +112,10 @@ public class ScreeniePanel extends JPanel implements Runnable{
         g2.setColor(panelColor);
         g2.fillRect(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
 
-        g2.setColor(Color.red);
-        g2.drawRect(rectX, rectY, rectWidth, rectHeight);
+        g2.setColor(Color.CYAN);
+        // g2.drawRect(rectX, rectY, rectWidth, rectHeight);
+
+        g2.drawRect(aniX, aniY, aniWidth, aniHeight);
 
         g2.dispose();
     }
