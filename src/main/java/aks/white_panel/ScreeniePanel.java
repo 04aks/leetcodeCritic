@@ -11,6 +11,7 @@ public class ScreeniePanel extends JPanel{
     
     PanelMouseHandler pmh = new PanelMouseHandler(this);
     int rectX, rectY, rectWidth, rectHeight;
+    Color panelColor = new Color(0,0,0,50);
     ScreeniePanel(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setPreferredSize(screenSize);
@@ -23,7 +24,7 @@ public class ScreeniePanel extends JPanel{
         Graphics2D g2 = (Graphics2D) g;
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        g2.setColor(new Color(0,0,0,50));
+        g2.setColor(panelColor);
         g2.fillRect(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
 
         g2.setColor(Color.red);

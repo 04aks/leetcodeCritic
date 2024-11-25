@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 public class PanelMouseHandler implements MouseListener{
 
     ScreeniePanel sp;
-    
+    int endingX, endingY;
     PanelMouseHandler(ScreeniePanel sp){
         this.sp = sp;
     }
@@ -37,6 +37,14 @@ public class PanelMouseHandler implements MouseListener{
         System.out.println("Ending y: " + e.getYOnScreen());
         sp.rectWidth = Math.abs(e.getXOnScreen() - sp.rectX);
         sp.rectHeight = Math.abs(e.getYOnScreen() - sp.rectY);
+
+        if((endingX = e.getXOnScreen()) < sp.rectX){
+            sp.rectX = endingX;
+        }
+        if((endingY = e.getYOnScreen()) < sp.rectY){
+            sp.rectY = endingY;
+        }
+
         sp.repaint();
     }
     
