@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,9 +20,8 @@ public class ScreeniePanel extends JPanel implements Runnable{
     PanelMouseHandler pmh = new PanelMouseHandler(this);
     int startingX, startingY;
     int rectX, rectY, rectWidth, rectHeight;
-    int aniX, aniY, aniWidth, aniHeight;
     int FPS = 60;
-    Color panelColor = new Color(0,0,0,50);
+    Color panelColor = new Color(0,0,0,70);
     Thread screenieThread;
     ScreeniePanel(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -31,6 +31,13 @@ public class ScreeniePanel extends JPanel implements Runnable{
         addMouseMotionListener(pmh);
     }
 
+    public void resetRectangle(){
+        rectX = 0;
+        rectY = 0;
+        rectWidth = 0;
+        rectHeight = 0;
+    }
+    
     public void takeScreenshot(Rectangle rectangle){
 
         try{
@@ -46,7 +53,7 @@ public class ScreeniePanel extends JPanel implements Runnable{
             ImageIO.write(capture, "png", screenshot);
 
         }catch(Exception e){
-            e.printStackTrace();
+            resetRectangle();
         }
     }
 
@@ -109,9 +116,14 @@ public class ScreeniePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
+        // Shape originalClip = g2.getClip();
+        // g2.setClip(rectX, rectY, rectWidth, rectHeight);
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         g2.setColor(panelColor);
         g2.fillRect(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
+
+        // g2.setClip(originalClip);
 
         g2.setColor(Color.CYAN);
         g2.drawRect(rectX, rectY, rectWidth, rectHeight);

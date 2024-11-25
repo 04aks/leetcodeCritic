@@ -35,15 +35,6 @@ public class PanelMouseHandler implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // sp.rectWidth = Math.abs(e.getXOnScreen() - sp.rectX);
-        // sp.rectHeight = Math.abs(e.getYOnScreen() - sp.rectY);
-
-        // if((endingX = e.getXOnScreen()) < sp.rectX){
-        //     sp.rectX = endingX;
-        // }
-        // if((endingY = e.getYOnScreen()) < sp.rectY){
-        //     sp.rectY = endingY;
-        // }
 
         // take screenshot
         sp.takeScreenshot(new Rectangle(sp.rectX+1, sp.rectY+1, sp.rectWidth-1, sp.rectHeight-1));
@@ -52,17 +43,6 @@ public class PanelMouseHandler implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        // sp.aniX = sp.rectX;
-        // sp.aniY = sp.rectY;
-        // sp.aniWidth = Math.abs(e.getXOnScreen() - sp.rectX);
-        // sp.aniHeight = Math.abs(e.getYOnScreen() - sp.rectY);
-        // if((aniEndingX = e.getXOnScreen()) < sp.aniX){
-        //     sp.aniX = aniEndingX;
-        // }
-        // if((aniEndingY = e.getYOnScreen()) < sp.aniY){
-        //     sp.aniY = aniEndingY;
-        // }
-        // System.out.println("say yo to the local cat");
         
         sp.rectWidth = Math.abs(e.getXOnScreen() - sp.startingX);
         sp.rectHeight = Math.abs(e.getYOnScreen() - sp.startingY);
