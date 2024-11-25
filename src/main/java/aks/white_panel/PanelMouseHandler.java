@@ -1,5 +1,6 @@
 package aks.white_panel;
 
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -45,6 +46,8 @@ public class PanelMouseHandler implements MouseListener{
             sp.rectY = endingY;
         }
 
+        // take screenshot
+        sp.takeScreenshot(new Rectangle(sp.rectX, sp.rectY, sp.rectWidth, sp.rectHeight));
         sp.repaint();
     }
     
