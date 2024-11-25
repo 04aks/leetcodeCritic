@@ -17,6 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ScreeniePanel extends JPanel implements Runnable{
     
     PanelMouseHandler pmh = new PanelMouseHandler(this);
+    int startingX, startingY;
     int rectX, rectY, rectWidth, rectHeight;
     int aniX, aniY, aniWidth, aniHeight;
     int FPS = 60;
@@ -101,7 +102,7 @@ public class ScreeniePanel extends JPanel implements Runnable{
 
     public void update(){
         System.out.println("rectangle: " + rectX + " " + rectY + " " + rectWidth + " " + rectHeight);
-        System.out.println("aniRect: " + aniX + " " + aniY + " " + aniWidth + " " + aniHeight);
+        // System.out.println("aniRect: " + aniX + " " + aniY + " " + aniWidth + " " + aniHeight);
     }
 
     @Override
@@ -113,9 +114,9 @@ public class ScreeniePanel extends JPanel implements Runnable{
         g2.fillRect(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
 
         g2.setColor(Color.CYAN);
-        // g2.drawRect(rectX, rectY, rectWidth, rectHeight);
+        g2.drawRect(rectX, rectY, rectWidth, rectHeight);
 
-        g2.drawRect(aniX, aniY, aniWidth, aniHeight);
+        // g2.drawRect(aniX, aniY, aniWidth, aniHeight);
 
         g2.dispose();
     }
