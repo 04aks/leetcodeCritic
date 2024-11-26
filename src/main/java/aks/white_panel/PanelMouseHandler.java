@@ -8,7 +8,7 @@ import java.awt.event.MouseMotionListener;
 public class PanelMouseHandler implements MouseListener, MouseMotionListener{
 
     ScreeniePanel sp;
-    int endingX, endingY, aniEndingX, aniEndingY;
+    int endingX, endingY;
     PanelMouseHandler(ScreeniePanel sp){
         this.sp = sp;
     }
@@ -58,5 +58,5 @@ public class PanelMouseHandler implements MouseListener, MouseMotionListener{
     public void mouseMoved(MouseEvent e) {
         
     }
-    
+
 }

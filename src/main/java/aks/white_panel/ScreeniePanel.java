@@ -6,14 +6,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Robot;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import aks.Panel;
+import aks.Window;
 
 public class ScreeniePanel extends JPanel implements Runnable{
     
@@ -23,7 +26,11 @@ public class ScreeniePanel extends JPanel implements Runnable{
     int FPS = 60;
     Color panelColor = new Color(0,0,0,70);
     Thread screenieThread;
-    ScreeniePanel(){
+    JFrame frame;
+    Panel p;
+    ScreeniePanel(JFrame frame, Panel p){
+        this.p = p;
+        this.frame = frame;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setPreferredSize(screenSize);
         setOpaque(false);
@@ -51,6 +58,11 @@ public class ScreeniePanel extends JPanel implements Runnable{
             }
             File screenshot = new File(location);
             ImageIO.write(capture, "png", screenshot);
+            
+            // close the screenshot panel
+            frame.dispose();
+            // display the main JFrame again
+            Window.frame.setState(JFrame.NORMAL);
 
         }catch(Exception e){
             resetRectangle();
@@ -73,6 +85,7 @@ public class ScreeniePanel extends JPanel implements Runnable{
             
         }else{
             System.out.println("so'ing went wrong");
+            resetRectangle();
         }
 
         return "";
@@ -108,27 +121,22 @@ public class ScreeniePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        System.out.println("rectangle: " + rectX + " " + rectY + " " + rectWidth + " " + rectHeight);
-        // System.out.println("aniRect: " + aniX + " " + aniY + " " + aniWidth + " " + aniHeight);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
-        // Shape originalClip = g2.getClip();
-        // g2.setClip(rectX, rectY, rectWidth, rectHeight);
-
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         g2.setColor(panelColor);
         g2.fillRect(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
 
-        // g2.setClip(originalClip);
-
         g2.setColor(Color.CYAN);
         g2.drawRect(rectX, rectY, rectWidth, rectHeight);
 
-        // g2.drawRect(aniX, aniY, aniWidth, aniHeight);
+        if(p.tweet.getAttemptPNG() != null){
+            g2.drawImage(p.tweet.getAttemptPNG(), 0, 0, null);
+        }
 
         g2.dispose();
     }

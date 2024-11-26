@@ -8,10 +8,12 @@ import javax.swing.JFrame;
 import aks.threads.GenerateThread;
 import aks.threads.OpenFileThread;
 import aks.threads.OpenSolutionFileThread;
+import aks.white_panel.Screenie;
 
 public class ActionHandler implements ActionListener{
 
     Panel p;
+    Screenie screenie;
     public ActionHandler(Panel p){
 
         this.p = p;
@@ -48,10 +50,12 @@ public class ActionHandler implements ActionListener{
     
     void takeAttemptScreenshot(){
         Window.frame.setState(JFrame.ICONIFIED);
+        screenie = new Screenie(p);
     }
 
     void takeSolutionScreenshot(){
         Window.frame.setState(JFrame.ICONIFIED);
+        screenie = new Screenie(p);
     }
     
 }
