@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import aks.Consts;
 import aks.Panel;
 import aks.Window;
 
@@ -28,9 +29,11 @@ public class ScreeniePanel extends JPanel implements Runnable{
     Thread screenieThread;
     JFrame frame;
     Panel p;
-    ScreeniePanel(JFrame frame, Panel p){
+    String tag;
+    ScreeniePanel(JFrame frame, Panel p, String tag){
         this.p = p;
         this.frame = frame;
+        this.tag = tag;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setPreferredSize(screenSize);
         setOpaque(false);
@@ -58,6 +61,12 @@ public class ScreeniePanel extends JPanel implements Runnable{
             }
             File screenshot = new File(location);
             ImageIO.write(capture, "png", screenshot);
+            if(tag.equals(Consts.ATTEMPT_SCREENSHOT_CMD)){
+                p.tweet.setAttemptPNG(capture);
+            }
+            else if(tag.equals(Consts.SOLUTION_SCREENSHOT_CMD)){
+                p.tweet.setIdealPNG(capture);
+            }
             
             // close the screenshot panel
             frame.dispose();
@@ -134,9 +143,7 @@ public class ScreeniePanel extends JPanel implements Runnable{
         g2.setColor(Color.CYAN);
         g2.drawRect(rectX, rectY, rectWidth, rectHeight);
 
-        if(p.tweet.getAttemptPNG() != null){
-            g2.drawImage(p.tweet.getAttemptPNG(), 0, 0, null);
-        }
+        
 
         g2.dispose();
     }

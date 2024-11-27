@@ -50,12 +50,12 @@ public class ActionHandler implements ActionListener{
     
     void takeAttemptScreenshot(){
         Window.frame.setState(JFrame.ICONIFIED);
-        screenie = new Screenie(p);
+        screenie = new Screenie(p, Consts.ATTEMPT_SCREENSHOT_CMD);
     }
 
     void takeSolutionScreenshot(){
         Window.frame.setState(JFrame.ICONIFIED);
-        screenie = new Screenie(p);
+        screenie = new Screenie(p, Consts.SOLUTION_SCREENSHOT_CMD);
     }
     
 }

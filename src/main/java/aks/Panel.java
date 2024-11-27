@@ -21,16 +21,17 @@ public class Panel extends JPanel{
     Color red = new Color(255,0,0,50);
     Color green = new Color(0,255,0,50);
 
-    static final int WIDTH = 500;
-    static final int HEIGHT = 200;
+    static final int WIDTH = 850;
+    static final int HEIGHT = 400;
     
     public Panel(){
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setLayout(new BorderLayout());
 
-        add(uploadPanel(), BorderLayout.NORTH);
-        add(center(), BorderLayout.CENTER);
-        add(footer(), BorderLayout.SOUTH);
+        // add(uploadPanel(), BorderLayout.NORTH);
+        add(screenshotsPanel(), BorderLayout.NORTH);
+        add(resultPanel(), BorderLayout.CENTER);
+        add(generateButPanel(), BorderLayout.SOUTH);
 
     }
 
@@ -47,7 +48,7 @@ public class Panel extends JPanel{
         return thisPanel;
     }
 
-    public JPanel center(){
+    public JPanel screenshotsPanel(){
         JPanel center = new JPanel();
 
         attemptScreenshot = tweetUtilities.button(Consts.ATTEMPT_SCREENSHOT, Consts.ATTEMPT_SCREENSHOT_CMD, ah);
@@ -59,7 +60,11 @@ public class Panel extends JPanel{
         return center;
     }
 
-    public JPanel footer(){
+    public JPanel resultPanel(){
+        return new WorkSpacePanel(this);
+    }
+
+    public JPanel generateButPanel(){
         JPanel footer = new JPanel();
 
         generateButton = tweetUtilities.button(Consts.BUTTON_GENERATE_NAME, Consts.BUTTON_GENERATE_COMMAND, ah);

@@ -7,14 +7,14 @@ public class Consts {
     static final String BUTTON_ATTEMPT_COMMAND = "attempt-img";
     //----
     static final String ATTEMPT_SCREENSHOT = "take Screenshot of your Attempt";
-    static final String ATTEMPT_SCREENSHOT_CMD = "attempt-img-screen";
+    public static final String ATTEMPT_SCREENSHOT_CMD = "attempt-img-screen";
 
     // Ideal (ideal Solution) button
     static final String BUTTON_IDEAL_NAME = "Upload the Ideal Image";
     static final String BUTTON_IDEAL_COMMAND = "ideal-img"; 
     //----
     static final String SOLUTION_SCREENSHOT = "take Screenshot of the Solution";
-    static final String SOLUTION_SCREENSHOT_CMD = "solution-img-screen";
+    public static final String SOLUTION_SCREENSHOT_CMD = "solution-img-screen";
 
     // generate button
     static final String BUTTON_GENERATE_NAME = "Generate overview Tweet";
